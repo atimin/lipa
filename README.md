@@ -6,14 +6,14 @@ Features
 - Dynamic creating treelike structures for Ruby
 - Flexible syntax
 - Supporting templates and scope initialization
+- Supporting Proc object as attributes
 
-Install
+Installation
 -----------------------------------------------------
 `gem install lipa`
 
 Example
 ------------------------------------------------------
-
 ```Ruby
 require 'lipa'
 
