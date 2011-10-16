@@ -1,0 +1,6 @@
+*.sw?
+*.gem
+Gemfile.lock
+.bundle/
+.rspec
+.rvmrc
