@@ -24,6 +24,18 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 module Lipa 
+  # Implementation of group description
+  # 
+  # @example
+  # tree = Lipa::Tree.new :tree do 
+  #   bunch :param_1 => "some_param" do
+  #     leaf :obj_1
+  #     leaf :obj_2
+  #   end
+  # end
+  #
+  # tree["obj_1"].param_1 #=> "some_param"
+  # tree["obj_2"].param_1 #=> "some_param"
   class Bunch 
     def initialize(branch, attrs = {}, &block)
       @attrs = attrs

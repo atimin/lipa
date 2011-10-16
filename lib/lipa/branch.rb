@@ -24,6 +24,19 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 module Lipa
+  # Implemenation of branch (conteiner) for description
+  #  
+  # @example
+  #
+  # tree = Lipa::Tree.new :tree do 
+  #   branch :group_1 do
+  #     leaf :obj_1, :param_1 => "some_param"
+  #   end
+  # end
+  # tree["group_1/obj_1"].param_1 #=> "some_param"
+  #
+  # alias #branch is #group, #dir
+
   class Branch < Leaf
     init_methods :branch, :dir, :group
 
@@ -39,6 +52,12 @@ module Lipa
       end
     end
 
+    # Accessor for entry by path
+    # @param [String] path to entry
+    # @return entry
+    #
+    # @example
+    # tree["dir_1/dir_2/searched_obj"] 
     def [](path)
       split_path = path.split("/")   
       obj = @attrs[:leafs][split_path[0]]
@@ -51,6 +70,18 @@ module Lipa
       end
     end
 
+    # Initial method for group description
+    # 
+    # @example
+    # tree = Lipa::Tree.new :tree do 
+    #   bunch :param_1 => "some_param" do
+    #     leaf :obj_1
+    #     leaf :obj_2
+    #   end
+    # end
+    #
+    # tree["obj_1"].param_1 #=> "some_param"
+    # tree["obj_2"].param_1 #=> "some_param"
     def bunch(attrs = {}, &block)
       if block_given?
         Lipa::Bunch.new(self, attrs, &block)

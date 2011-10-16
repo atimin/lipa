@@ -25,6 +25,21 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 module Lipa
+  # Base object for all nested object of tree
+  # It supports initialization 
+  # attributes by constant, variable or Proc object
+  #
+  # @example
+  # tree = Lipa::Tree.new :tree do 
+  #   leaf :object, :param_1 => 4 do
+  #     param_2 "some_param"
+  #     param_3 lambda{1+param_3}
+  #   end
+  # end
+  # tree["object"].param_1 #=> 4
+  # tree["object"].param_2 #=> "some_param"
+  # tree["object"].param_3 #=> 5
+ 
   class Leaf 
     attr_accessor :attrs
     @@init_methods = {"leaf" => self, "object" => self}

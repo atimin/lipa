@@ -24,8 +24,31 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 module Lipa 
+  # Implementaion of root of description
+  # @example
+  #
+  # tree = Lipa::Tree.new :tree do 
+  #   leaf :object do
+  #     param_1 "some_param"
+  #     param_2 lambda{1+2}
+  #   end
+  # end
+  #
+  # tree["object"].param_1 #=> "some_param"
+  # tree["object"].param_2 #=> 3 
   class Tree < Branch
     attr_reader :kinds
+
+    # Initialize of kind
+    # @see Lipa::Kind
+    #
+    # @example
+    #
+    # kind :some_kind do
+    #   param1 "some_param"
+    # end
+    #
+    # leaf :some_instance, :kind => :some_kind 
     def kind(name, attrs = {}, &block)
       if block_given?
         @@kinds ||= {}
@@ -34,6 +57,5 @@ module Lipa
     end
 
     alias_method :template, :kind
-
   end
 end
