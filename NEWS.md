@@ -1,7 +1,7 @@
-Future Release-0.2.0
+Next Release-0.2.0
 ------------------------
-- New clear API by one class Lipa::Node. Classes Lipa::Leaf and Lipa::Branch 
-is depricated and is deleting in release 0.3.0. 
+- New clear API with one general class Lipa::Node. Classes Lipa::Leaf and Lipa::Branch 
+is deprecated and is deleting in release 0.3.0. 
   ```Ruby
     node :branch do 
       with :color => "green",  do 
@@ -10,7 +10,7 @@ is depricated and is deleting in release 0.3.0.
       end    
     end
 
-- Added new method access to nodes:
+- Added new methods access to nodes:
   ```Ruby
     puts Lipa::Tree["tree://branch/leaf_green"].color
     #or
@@ -18,7 +18,19 @@ is depricated and is deleting in release 0.3.0.
     #or
     puts tree.red_leaf.color
   ```
+- Extended template functional:
+  ```Ruby
+  kind :planet, :for => :node do 
+    has_live false
+    has_water false
+    number 0
+  end
 
+  planet :venus do 
+    number 2
+    radius 107_476_259
+  end
+  ```
 2011-10-16 Release-0.1.0
 ------------------------
-Initial relesed!
+Initial released!

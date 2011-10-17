@@ -2,7 +2,7 @@ $:.unshift File.join(File.dirname(__FILE__),'../lib')
 require 'lipa'
 
 tree = Lipa::Tree.new :tree do 
-  kind :red_leaf do 
+  kind :red, :for => :node do 
     color "red"
   end
 
@@ -13,7 +13,7 @@ tree = Lipa::Tree.new :tree do
     end    
   end
 
-  node :red_leaf, :kind => :red_leaf
+  red :red_leaf
 end
 
 #Access

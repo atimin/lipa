@@ -53,10 +53,8 @@ module Lipa
     #
     #   leaf :some_instance, :kind => :some_kind 
     def kind(name, attrs = {}, &block)
-      if block_given?
-        @@kinds ||= {}
-        @@kinds[name.to_sym] = Lipa::Kind.new(name, attrs, &block)
-      end
+      @@kinds ||= {}
+      @@kinds[name.to_sym] = Lipa::Kind.new(name, attrs, &block)
     end
 
     alias_method :template, :kind

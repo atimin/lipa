@@ -14,11 +14,11 @@ Installation
 
 Example
 ------------------------------------------------------
-```Ruby
+  ```Ruby
   require 'lipa'
 
   tree = Lipa::Tree.new :tree do 
-    kind :red_leaf do 
+    kind :red, :for => :node do 
       color "red"
     end
 
@@ -29,7 +29,7 @@ Example
       end    
     end
 
-    node :red_leaf, :kind => :red_leaf
+    red :red_leaf
   end
 
   #Access
@@ -38,7 +38,7 @@ Example
   puts tree["branch/leaf_yelow"].color
   #or
   puts tree.red_leaf.color
-```
+  ```
 
 Reference
 ----------------------------------

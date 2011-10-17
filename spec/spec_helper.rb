@@ -19,6 +19,7 @@ TREE ||= Lipa::Tree.new "lipa" do
       node :obj_6, :attr_1 => 200, :attr_2 => ""
     end
 
+    # Template
     kind :kind_group do 
       node :obj_x
       node :obj_y do
@@ -30,6 +31,16 @@ TREE ||= Lipa::Tree.new "lipa" do
       node :obj_x do 
         attr_1 "from_instance"
       end
+    end
+    #or
+    kind :folder, :for => :node
+    kind :file, :for => :node do 
+      size 1024
+      ext "jpg"
+    end
+
+    folder :folder_1 do 
+      file :some_file, :ext => "txt"
     end
   end
 

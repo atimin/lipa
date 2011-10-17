@@ -45,22 +45,35 @@ module Lipa
     @@kinds = {}
 
     def initialize(name, attrs = {}, &block)
-      @attrs = attrs 
+      @attrs = {} 
       @attrs[:name] = name.to_s
 
+      #init attrs from template
       if attrs[:kind]
-        @kind = @@kinds[attrs[:kind].to_sym]
-
-        @attrs.merge! @kind.attrs
+        kind = @@kinds[attrs[:kind].to_sym]
+        @attrs.merge! kind.attrs if kind
       end
 
+      @attrs.merge! attrs
       instance_eval &block if block_given?
     end
 
     def method_missing(name, *args, &block)
       @attrs[:children] ||= {} 
-      init_class = @@init_methods[name]
+
+      # Init from kind
+      kind = @@kinds[name]
+      if kind and kind.for
+        init_class = @@init_methods[kind.for] 
+        args[1] ||= {}
+        args[1][:kind] = kind.name
+      else
+        #from init methods
+        init_class = @@init_methods[name]
+      end
+
       if init_class
+        # Making children objects
         args[1] ||= {}
         args[1][:parent] = self
         @attrs[:children][args[0].to_sym] = init_class.send(:new, *args, &block )
