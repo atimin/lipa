@@ -32,8 +32,8 @@ un = Lipa::Tree.new :universe do
 end
 
 
-puts un["sun_system/earth"].number
-puts un["sun_system/earth"].radius
-puts un["sun_system/earth"].has_live
-puts un["sun_system/earth"].has_water
-puts un["sun_system/earth/moon"].radius
+puts un.sun_system.earth.number
+puts un.sun_system.earth.radius
+puts un.sun_system.earth.has_live
+puts un.sun_system.earth.has_water
+puts un.sun_system.earth.moon.radius

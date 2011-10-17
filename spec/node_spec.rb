@@ -37,11 +37,15 @@ describe Lipa::Node do
   end
 
   it 'should have children' do
-    @node.children["obj_2"].should eql(tree["group_1/obj_1/obj_2"])
-    @node.children["obj_3"].should eql(tree["group_1/obj_1/obj_3"])
+    @node.children[:obj_2].should eql(tree["group_1/obj_1/obj_2"])
+    @node.children[:obj_3].should eql(tree["group_1/obj_1/obj_3"])
   end
 
   it 'should have [] for access entry by path' do
     @node["obj_3"].should eql(tree["group_1/obj_1/obj_3"])
+  end
+
+  it 'should access for children by .' do
+    @node.obj_3.should eql(tree["group_1/obj_1/obj_3"])
   end
 end

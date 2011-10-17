@@ -46,12 +46,12 @@ module Lipa
     end
 
     def method_missing(name, *args, &block)
-      init_class = Lipa::Node.init_methods[name.to_s]
+      init_class = Lipa::Node.init_methods[name]
       if init_class and init_class.class == Class
         args[1] ||= {}
         args[1] = @attrs.merge(args[1]) #to save local attrs
         args[1][:parent] = @parent
-        @parent.attrs[:children][args[0].to_s] = init_class.send(:new, *args, &block )
+        @parent.attrs[:children][args[0].to_sym] = init_class.send(:new, *args, &block )
       else
         super
       end

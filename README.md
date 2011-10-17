@@ -15,29 +15,31 @@ Installation
 Example
 ------------------------------------------------------
 ```Ruby
-require 'lipa'
+  require 'lipa'
 
-tree = Lipa::Tree.new :tree do 
-  kind :red_leaf do 
-    color "red"
+  tree = Lipa::Tree.new :tree do 
+    kind :red_leaf do 
+      color "red"
+    end
+
+    node :branch do 
+      with :color => "green",  do 
+        node :leaf_green
+        node :leaf_yelow, :color => "yelow"
+      end    
+    end
+
+    node :red_leaf, :kind => :red_leaf
   end
 
-  node :branch do 
-    with :color => "green",  do 
-      node :leaf_green
-      node :leaf_yelow, :color => "yelow"
-    end    
-  end
-
-  node :red_leaf, :kind => :red_leaf
-end
-
-
-puts tree["branch/leaf_green"].color
-puts tree["branch/leaf_yelow"].color
-puts tree["red_leaf"].color
+  #Access
+  puts Lipa::Tree["tree://branch/leaf_green"].color
+  #or
+  puts tree["branch/leaf_yelow"].color
+  #or
+  puts tree.red_leaf.color
 ```
+
 Reference
 ----------------------------------
-
 Home page: http://lipa.flipback.net

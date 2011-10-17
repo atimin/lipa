@@ -41,7 +41,7 @@ module Lipa
   #   tree["object"].param_3 #=> 5
   class Node 
     attr_accessor :attrs
-    @@init_methods = {"node" => self}
+    @@init_methods = {:node => self}
     @@kinds = {}
 
     def initialize(name, attrs = {}, &block)
@@ -59,14 +59,17 @@ module Lipa
 
     def method_missing(name, *args, &block)
       @attrs[:children] ||= {} 
-      init_class = @@init_methods[name.to_s]
+      init_class = @@init_methods[name]
       if init_class
         args[1] ||= {}
         args[1][:parent] = self
-        @attrs[:children][args[0].to_s] = init_class.send(:new, *args, &block )
+        @attrs[:children][args[0].to_sym] = init_class.send(:new, *args, &block )
       else
         case args.size
           when 0
+            child = @attrs[:children][name]
+            return child if child
+
             val = @attrs[name]
             if val.class == Proc
               val.call
@@ -83,15 +86,15 @@ module Lipa
       end
     end
 
-    # Accessor for entry by path
-    # @param [String] path to entry
-    # @return entry
+    # Accessor for node by path
+    # @param [String] path nodes
+    # @return [Node] node
     #
     # @example
     #   tree["dir_1/dir_2/searched_obj"] 
     def [](path)
       split_path = path.split("/")   
-      obj = @attrs[:children][split_path[0]]
+      obj = @attrs[:children][split_path[0].to_sym]
       if obj
         if split_path.size > 1
           obj[split_path[1..-1].join("/")]
@@ -122,7 +125,7 @@ module Lipa
     def self.init_methods(*names)
       if names.size > 0
         names.each do |name|
-          @@init_methods[name.to_s] = self
+          @@init_methods[name.to_sym] = self
         end
       else
         @@init_methods

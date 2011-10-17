@@ -16,7 +16,9 @@ tree = Lipa::Tree.new :tree do
   node :red_leaf, :kind => :red_leaf
 end
 
-
-puts tree["branch/leaf_green"].color
+#Access
+puts Lipa::Tree["tree://branch/leaf_green"].color
+#or
 puts tree["branch/leaf_yelow"].color
-puts tree["red_leaf"].color
+#or
+puts tree.red_leaf.color

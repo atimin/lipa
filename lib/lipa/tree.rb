@@ -37,18 +37,21 @@ module Lipa
   #   tree["object"].param_1 #=> "some_param"
   #   tree["object"].param_2 #=> 3 
   class Tree < Node
-    attr_reader :kinds
+    @@trees = {}
+    def initialize(name, attrs = {}, &block_given)
+      super
+      @@trees.merge! name.to_s => self
+    end
 
     # Initialize of kind
     # @see Lipa::Kind
     #
     # @example
+    #   kind :some_kind do
+    #     param1 "some_param"
+    #   end
     #
-    # kind :some_kind do
-    #   param1 "some_param"
-    # end
-    #
-    # leaf :some_instance, :kind => :some_kind 
+    #   leaf :some_instance, :kind => :some_kind 
     def kind(name, attrs = {}, &block)
       if block_given?
         @@kinds ||= {}
@@ -57,5 +60,17 @@ module Lipa
     end
 
     alias_method :template, :kind
+
+    # Accessor for node by uri
+    #  
+    # @param [String] uri by format [tree_name]://[path]
+    # @return [Node] node
+    #
+    # @example
+    #  Lipa::Tree["some_tree://node_1/node_2"] 
+    def self.[](uri)
+      tree, path = uri.split("://")
+      @@trees[tree][path] if @@trees[tree] 
+    end
   end
 end
