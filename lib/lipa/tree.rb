@@ -27,16 +27,16 @@ module Lipa
   # Implementaion of root of description
   # @example
   #
-  # tree = Lipa::Tree.new :tree do 
-  #   leaf :object do
-  #     param_1 "some_param"
-  #     param_2 lambda{1+2}
+  #   tree = Lipa::Tree.new :tree do 
+  #     leaf :object do
+  #       param_1 "some_param"
+  #       param_2 lambda{1+2}
+  #     end
   #   end
-  # end
   #
-  # tree["object"].param_1 #=> "some_param"
-  # tree["object"].param_2 #=> 3 
-  class Tree < Branch
+  #   tree["object"].param_1 #=> "some_param"
+  #   tree["object"].param_2 #=> 3 
+  class Tree < Node
     attr_reader :kinds
 
     # Initialize of kind

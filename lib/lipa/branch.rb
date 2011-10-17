@@ -24,70 +24,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 module Lipa
-  # Implemenation of branch (conteiner) for description
-  #  
-  # @example
-  #
-  # tree = Lipa::Tree.new :tree do 
-  #   branch :group_1 do
-  #     leaf :obj_1, :param_1 => "some_param"
-  #   end
-  # end
-  # tree["group_1/obj_1"].param_1 #=> "some_param"
-  #
-  # alias #branch is #group, #dir
-
-  class Branch < Leaf
+  # Deprecte class 
+  # Don't use it
+  class Branch < Node
     init_methods :branch, :dir, :group
-
-    def method_missing(name, *args, &block)
-      @attrs[:leafs] ||= {} 
-      init_class = @@init_methods[name.to_s]
-      if init_class
-        args[1] ||= {}
-        args[1][:branch] = self
-        @attrs[:leafs][args[0].to_s] = init_class.send(:new, *args, &block )
-      else
-        super
-      end
+    def initialize(name, attrs = {}, &block)
+      warn "#{__FILE__}:#{__LINE__} Deprecated class. Please use Lipa::Node. It is removing in 0.3.0 version"
+      super
     end
-
-    # Accessor for entry by path
-    # @param [String] path to entry
-    # @return entry
-    #
-    # @example
-    # tree["dir_1/dir_2/searched_obj"] 
-    def [](path)
-      split_path = path.split("/")   
-      obj = @attrs[:leafs][split_path[0]]
-      if obj
-        if split_path.size > 1
-          obj[split_path[1..-1].join("/")]
-        else
-          obj
-        end
-      end
-    end
-
-    # Initial method for group description
-    # 
-    # @example
-    # tree = Lipa::Tree.new :tree do 
-    #   bunch :param_1 => "some_param" do
-    #     leaf :obj_1
-    #     leaf :obj_2
-    #   end
-    # end
-    #
-    # tree["obj_1"].param_1 #=> "some_param"
-    # tree["obj_2"].param_1 #=> "some_param"
-    def bunch(attrs = {}, &block)
-      if block_given?
-        Lipa::Bunch.new(self, attrs, &block)
-      end
-    end
-
-    alias_method :with, :bunch
   end
 end

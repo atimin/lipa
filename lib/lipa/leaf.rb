@@ -25,65 +25,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 module Lipa
-  # Base object for all nested object of tree
-  # It supports initialization 
-  # attributes by constant, variable or Proc object
-  #
-  # @example
-  # tree = Lipa::Tree.new :tree do 
-  #   leaf :object, :param_1 => 4 do
-  #     param_2 "some_param"
-  #     param_3 lambda{1+param_3}
-  #   end
-  # end
-  # tree["object"].param_1 #=> 4
-  # tree["object"].param_2 #=> "some_param"
-  # tree["object"].param_3 #=> 5
- 
-  class Leaf 
-    attr_accessor :attrs
-    @@init_methods = {"leaf" => self, "object" => self}
-    @@kinds = {}
-
+  # Deprecte class 
+  # Don't use it
+  class Leaf < Node
+    init_methods :leaf, :object
     def initialize(name, attrs = {}, &block)
-      @attrs = attrs 
-      @attrs[:name] = name.to_s
-
-      if attrs[:kind]
-        @kind = @@kinds[attrs[:kind].to_sym]
-
-        @attrs.merge! @kind.attrs
-      end
-
-      instance_eval &block if block_given?
-    end
-
-    def method_missing(name, *args, &block)
-      case args.size
-        when 0
-          val = @attrs[name]
-          if val.class == Proc
-            val.call
-          else
-            val
-          end
-        when 1
-          name = name.to_s
-          name["="] = "" if name["="]
-          @attrs[name.to_sym] = args[0]
-        else
-          super
-      end
-    end
-
-    def self.init_methods(*names)
-      if names.size > 0
-        names.each do |name|
-          @@init_methods[name.to_s] = self
-        end
-      else
-        @@init_methods
-      end
+      warn "#{__FILE__}:#{__LINE__} Deprecated class. Please use Lipa::Node. It is removing in 0.3.0 version"
+      super
     end
   end
 end

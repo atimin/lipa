@@ -14,7 +14,7 @@ describe Lipa::Bunch do
   it 'should have "with" initial method' do
     t = Lipa::Tree.new("1") do
       with :attr_1 => 999 do 
-        leaf :obj_1
+        node :obj_1
       end
     end
     t["obj_1"].attr_1.should eql(999)

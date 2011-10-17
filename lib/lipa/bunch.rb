@@ -27,31 +27,31 @@ module Lipa
   # Implementation of group description
   # 
   # @example
-  # tree = Lipa::Tree.new :tree do 
-  #   bunch :param_1 => "some_param" do
-  #     leaf :obj_1
-  #     leaf :obj_2
+  #   tree = Lipa::Tree.new :tree do 
+  #     bunch :param_1 => "some_param" do
+  #       leaf :obj_1
+  #       leaf :obj_2
+  #     end
   #   end
-  # end
   #
-  # tree["obj_1"].param_1 #=> "some_param"
-  # tree["obj_2"].param_1 #=> "some_param"
+  #   tree["obj_1"].param_1 #=> "some_param"
+  #   tree["obj_2"].param_1 #=> "some_param"
   class Bunch 
-    def initialize(branch, attrs = {}, &block)
+    def initialize(parent, attrs = {}, &block)
       @attrs = attrs
-      @branch = branch
-      @branch.attrs[:leafs] ||= {}
+      @parent = parent
+      @parent.attrs[:children] ||= {}
 
       instance_eval &block if block_given?
     end
 
     def method_missing(name, *args, &block)
-      init_class = Lipa::Leaf.init_methods[name.to_s]
+      init_class = Lipa::Node.init_methods[name.to_s]
       if init_class and init_class.class == Class
         args[1] ||= {}
         args[1] = @attrs.merge(args[1]) #to save local attrs
-        args[1][:branch] = @branch
-        @branch.attrs[:leafs][args[0].to_s] = init_class.send(:new, *args, &block )
+        args[1][:parent] = @parent
+        @parent.attrs[:children][args[0].to_s] = init_class.send(:new, *args, &block )
       else
         super
       end
