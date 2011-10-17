@@ -37,4 +37,7 @@ puts tree["branch/leaf_green"].color
 puts tree["branch/leaf_yelow"].color
 puts tree["red_leaf"].color
 ```
+Reference
+----------------------------------
 
+Home page: http://lipa.flipback.net
