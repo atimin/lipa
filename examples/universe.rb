@@ -2,30 +2,30 @@ $:.unshift File.join(File.dirname(__FILE__),'../lib')
 require 'lipa'
 
 un = Lipa::Tree.new :universe do 
-  template :planet do 
+  kind :planet do 
     has_live false
     has_water false
     number 0
   end
 
-  group :sun_system do 
-    object :mercury, :kind => :planet do 
+  node :sun_system do 
+    node :mercury, :kind => :planet do 
       number 1
       radius 46_001_210 
     end
 
-    object :venus, :kind => :planet do 
+    node :venus, :kind => :planet do 
       number 2
       radius 107_476_259
     end
 
-    group :earth, :kind => :planet do 
+    node :earth, :kind => :planet do 
       number 3
       radius 147_098_074
       has_live true
       has_water true
 
-      object :moon, :radius => 363_104
+      node :moon, :radius => 363_104
     end
 
   end

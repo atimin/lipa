@@ -6,14 +6,14 @@ tree = Lipa::Tree.new :tree do
     color "red"
   end
 
-  branch :branch do 
-    bunch :color => "green",  do 
-      leaf :leaf_green
-      leaf :leaf_yelow, :color => "yelow"
+  node :branch do 
+    with :color => "green",  do 
+      node :leaf_green
+      node :leaf_yelow, :color => "yelow"
     end    
   end
 
-  leaf :red_leaf, :kind => :red_leaf
+  node :red_leaf, :kind => :red_leaf
 end
 
 
