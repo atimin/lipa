@@ -25,8 +25,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require "lipa/version"
 require "lipa/node"
-require "lipa/leaf"
-require "lipa/branch"
 require "lipa/bunch"
 require "lipa/kind"
 require "lipa/tree"

@@ -144,16 +144,5 @@ module Lipa
         @@init_methods
       end
     end
-
-    #Deprecated methods
-    def bunch(attrs = {}, &block)
-      warn "#{__FILE__}:#{__LINE__} Deprecated method. Please use Lipa::Node. It is removing in 0.3.0 version"
-      with(attrs, &block)
-    end
-
-    def leafs
-      warn "#{__FILE__}:#{__LINE__} Deprecated method. Please use Lipa::Node. It is removing in 0.3.0 version"
-      attrs[:children]
-    end
   end
 end

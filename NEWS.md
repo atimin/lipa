@@ -1,3 +1,8 @@
+Next Release-0.3.0
+-----------------------
+- Deleted deprecated classes ```Lipa::Leaf``` and ```Lipa::Branch```
+- Deleted deprecated methods ```Node#leafs``` and ```Node#branch```
+
 2011-10-17 Release-0.2.0
 ------------------------
 - New clear API with one general class ```Lipa::Node```. Classes ```Lipa::Leaf``` and ```Lipa::Branch``` 
