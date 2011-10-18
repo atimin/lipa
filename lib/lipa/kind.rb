@@ -27,17 +27,16 @@ module Lipa
   # Implemenation of kind(template) for description
   #
   # @example
-  #
   #   tree = Lipa::Tree.new :tree do 
   #     kind :some_kind do
   #       param1 "some_param"
   #     end
   #
-  #     leaf :some_instance, :kind => :some_kind 
+  #     some_kind :some_instance 
   #   end
   #   tree["some_instance"].param_1 #=> "some_param"
   #
-  #   alias #kind is #template
+  # @see Tree#kind
   class Kind < Node
   end
 end

@@ -36,9 +36,9 @@ module Lipa
   #       param_3 lambda{1+param_3}
   #     end
   #   end
-  #   tree["object"].param_1 #=> 4
-  #   tree["object"].param_2 #=> "some_param"
-  #   tree["object"].param_3 #=> 5
+  #   tree.object.param_1 #=> 4
+  #   tree.object.param_2 #=> "some_param"
+  #   tree.object.param_3 #=> 5
   class Node 
     attr_accessor :attrs
     @@init_methods = {:node => self}
@@ -122,19 +122,36 @@ module Lipa
     # @example
     #   tree = Lipa::Tree.new :tree do 
     #     with :param_1 => "some_param" do
-    #       leaf :obj_1
-    #       leaf :obj_2
+    #       node :obj_1
+    #       node :obj_2
     #     end
     #   end
     #
-    #   tree["obj_1"].param_1 #=> "some_param"
-    #   tree["obj_2"].param_1 #=> "some_param"
+    #   tree.obj_1.param_1 #=> "some_param"
+    #   tree.obj_2.param_1 #=> "some_param"
     def with(attrs = {}, &block)
       if block_given?
         Lipa::Bunch.new(self, attrs, &block)
       end
     end
 
+    # Accesor for methods for initialization
+    # node objects
+    # 
+    # @param names of initial methods
+    #
+    # @example
+    #   class Folder < Lipa::Node
+    #     init_methods :folder
+    #   end
+    #
+    #   fls = Lipa::Tree.new :folders do
+    #     folder :folder_1 do
+    #       param_1 "some_param
+    #     end
+    #   end
+    #
+    #   fls.folder_1.class #=> Folder
     def self.init_methods(*names)
       if names.size > 0
         names.each do |name|
