@@ -19,4 +19,17 @@ describe Lipa::Bunch do
     end
     t["obj_1"].attr_1.should eql(999)
   end
+
+  it 'should work with kinds' do
+    t = Lipa::Tree.new("1") do
+      kind :some_kind, :for => :node
+
+      with :attr_1 => 999 do 
+        some_kind :obj_1
+      end
+    end
+    t["obj_1"].attr_1.should eql(999)
+  end
+
+
 end

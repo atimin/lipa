@@ -59,25 +59,7 @@ module Lipa
     end
 
     def method_missing(name, *args, &block)
-      @attrs[:children] ||= {} 
-
-      # Init from kind
-      kind = @@kinds[name]
-      if kind and kind.for
-        init_class = @@init_methods[kind.for] 
-        args[1] ||= {}
-        args[1][:kind] = kind.name
-      else
-        #from init methods
-        init_class = @@init_methods[name]
-      end
-
-      if init_class
-        # Making children objects
-        args[1] ||= {}
-        args[1][:parent] = self
-        @attrs[:children][args[0].to_sym] = init_class.send(:new, *args, &block )
-      else
+      unless Node.add_node(name, self, *args, &block)
         case args.size
           when 0
             child = @attrs[:children][name]
@@ -142,6 +124,35 @@ module Lipa
         end
       else
         @@init_methods
+      end
+    end
+
+    # Making children node
+    #
+    # @param [String] name of initial method or kind
+    # @param [Node] parent node
+    # @param args of node
+    # @param block for node
+    def self.add_node(name, parent, *args, &block)
+      parent.attrs[:children] ||= {} 
+       
+      # Init from kind
+      kind = @@kinds[name]
+      if kind and kind.for
+        init_class = @@init_methods[kind.for] 
+        args[1] ||= {}
+        args[1][:kind] = kind.name
+      else
+        #from init methods
+        init_class = @@init_methods[name]
+      end
+
+      if init_class
+        args[1] ||= {}
+        args[1][:parent] = parent 
+        parent.attrs[:children][args[0].to_sym] = init_class.send(:new, *args, &block )
+      else  
+        nil
       end
     end
 

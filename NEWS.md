@@ -1,3 +1,19 @@
+2011-10-19 Release-0.2.1
+
+- Fixed bug in Lipa::Node class. Now is working:
+
+  ```Ruby
+  t = Lipa::Tree.new("1") do
+    kind :some_kind, :for => :node
+
+    with :attr_1 => 999 do 
+      some_kind :obj_1
+    end
+  end
+  ```
+
+- Refactoring. Added method Node#init_node for making cnildren nodes
+
 2011-10-17 Release-0.2.0
 ------------------------
 - New clear API with one general class ```Lipa::Node```. Classes ```Lipa::Leaf``` and ```Lipa::Branch``` 
