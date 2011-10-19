@@ -1,6 +1,6 @@
 2011-10-19 Release-0.2.1
 
-- Fixed bug in Lipa::Node class. Now is working:
+- Fixed bug in Lipa::Bunch class. Now is working:
 
   ```Ruby
   t = Lipa::Tree.new("1") do
