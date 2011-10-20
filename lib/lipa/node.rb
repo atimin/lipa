@@ -46,7 +46,6 @@ module Lipa
 
     def initialize(name, attrs = {}, &block)
       @attrs = {} 
-      @attrs[:name] = name.to_s
 
       #init attrs from template
       if attrs[:kind]
@@ -55,6 +54,7 @@ module Lipa
       end
 
       @attrs.merge! attrs
+      @attrs[:name] = name.to_s
       instance_eval &block if block_given?
     end
 
@@ -67,7 +67,7 @@ module Lipa
 
             val = @attrs[name]
             if val.class == Proc
-              val.call
+              instance_eval &(val)
             else
               val
             end
@@ -150,7 +150,12 @@ module Lipa
       if init_class
         args[1] ||= {}
         args[1][:parent] = parent 
-        parent.attrs[:children][args[0].to_sym] = init_class.send(:new, *args, &block )
+        child_name = args[0].to_sym
+
+        existen_child = parent.attrs[:children][child_name]
+        args[1] = existen_child.attrs.merge(args[1]) if existen_child
+          
+        parent.attrs[:children][child_name] = init_class.send(:new, *args, &block )
       else  
         nil
       end

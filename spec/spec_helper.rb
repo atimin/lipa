@@ -6,7 +6,7 @@ TREE ||= Lipa::Tree.new "lipa" do
 
       node :obj_1, :attr_1 => 5 do
         attr_2 3
-        attr_3 lambda{attr_1 + attr_2}
+        attr_3 Proc.new{attr_1 + attr_2}
 
         node :obj_2 
         node :obj_3 
@@ -21,15 +21,18 @@ TREE ||= Lipa::Tree.new "lipa" do
 
     # Template
     kind :kind_group do 
-      node :obj_x
-      node :obj_y do
+      node :obj_x do
+        attr_0 "from_kind"
         attr_1 "from_kind"
+        attr_2 0
+        attr_3 Proc.new{ attr_2 * 2}
       end
     end
 
     node :group_3, :kind => :kind_group do 
       node :obj_x do 
         attr_1 "from_instance"
+        attr_2 2
       end
     end
     #or

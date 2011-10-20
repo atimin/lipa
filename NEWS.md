@@ -1,3 +1,8 @@
+2011-10-20 Release-0.2.2
+
+- Fixed issue [#1](https://github.com/flipback/lipa/issues/1) in template functional. 
+  Lambda expressions is not supporting. Use `Proc.new {}` for added calculation in your trees
+
 2011-10-19 Release-0.2.1
 
 - Fixed bug in Lipa::Bunch class. Now is working:
