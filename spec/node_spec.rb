@@ -1,8 +1,22 @@
-require File.dirname(__FILE__) + "/spec_helper"
+require 'lipa'
 
 describe Lipa::Node do
-  before :each do
-    @node = tree["group_1/obj_1"]
+  before :all do
+    @tree =  Lipa::Tree.new "lipa" do
+      node :group_1 do 
+        any_attr "any attr"
+
+        node :obj_1, :attr_1 => 5 do
+          attr_2 3
+          attr_3 Proc.new{attr_1 + attr_2}
+
+          node :obj_2 
+          node :obj_3 
+        end
+      end
+    end
+
+    @node = @tree["group_1/obj_1"]
   end
 
   it 'should have name' do
@@ -10,7 +24,7 @@ describe Lipa::Node do
   end
 
   it 'should have parent' do
-    @node.parent.should eql(tree["group_1"])
+    @node.parent.should eql(@tree["group_1"])
   end
 
   it 'should have descripted attr_1 eql 5' do
@@ -39,15 +53,15 @@ describe Lipa::Node do
   end
 
   it 'should have children' do
-    @node.children[:obj_2].should eql(tree["group_1/obj_1/obj_2"])
-    @node.children[:obj_3].should eql(tree["group_1/obj_1/obj_3"])
+    @node.children[:obj_2].should eql(@tree["group_1/obj_1/obj_2"])
+    @node.children[:obj_3].should eql(@tree["group_1/obj_1/obj_3"])
   end
 
   it 'should have [] for access entry by path' do
-    @node["obj_3"].should eql(tree["group_1/obj_1/obj_3"])
+    @node["obj_3"].should eql(@tree["group_1/obj_1/obj_3"])
   end
 
   it 'should access for children by .' do
-    @node.obj_3.should eql(tree["group_1/obj_1/obj_3"])
+    @node.obj_3.should eql(@tree["group_1/obj_1/obj_3"])
   end
 end

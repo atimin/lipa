@@ -23,7 +23,6 @@ Next Release-0.3.0
   ```
 
 - Refactoring. Added method Node#init_node for making cnildren nodes
->>>>>>> release-0.2.2
 
 2011-10-17 Release-0.2.0
 ------------------------
