@@ -23,6 +23,8 @@ describe Lipa::Node do
 
   it 'should have descripted attr_3 eql sum of attr_1 and attr_2' do
     @node.attr_3.should eql(8)
+    @node.attr_2 = 10
+    @node.attr_3.should eql(15)
   end
 
   it 'should support write access for attrs' do

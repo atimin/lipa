@@ -3,6 +3,28 @@ Next Release-0.3.0
 - Deleted deprecated classes ```Lipa::Leaf``` and ```Lipa::Branch```
 - Deleted deprecated methods ```Node#leafs``` and ```Node#branch```
 
+2011-10-20 Release-0.2.2
+
+- Fixed issue [#1](https://github.com/flipback/lipa/issues/1) in template functional. 
+  Lambda expressions is not supporting. Use `Proc.new {}` for added calculation in your trees
+
+2011-10-19 Release-0.2.1
+
+- Fixed bug in Lipa::Bunch class. Now is working:
+
+  ```Ruby
+  t = Lipa::Tree.new("1") do
+    kind :some_kind, :for => :node
+
+    with :attr_1 => 999 do 
+      some_kind :obj_1
+    end
+  end
+  ```
+
+- Refactoring. Added method Node#init_node for making cnildren nodes
+>>>>>>> release-0.2.2
+
 2011-10-17 Release-0.2.0
 ------------------------
 - New clear API with one general class ```Lipa::Node```. Classes ```Lipa::Leaf``` and ```Lipa::Branch``` 

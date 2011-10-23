@@ -33,7 +33,7 @@ module Lipa
   #   tree = Lipa::Tree.new :tree do 
   #     node :object, :param_1 => 4 do
   #       param_2 "some_param"
-  #       param_3 lambda{1+param_3}
+  #       param_3 Proc.new{1+param_3}
   #     end
   #   end
   #   tree.object.param_1 #=> 4
@@ -46,7 +46,6 @@ module Lipa
 
     def initialize(name, attrs = {}, &block)
       @attrs = {} 
-      @attrs[:name] = name.to_s
 
       #init attrs from template
       if attrs[:kind]
@@ -55,29 +54,12 @@ module Lipa
       end
 
       @attrs.merge! attrs
+      @attrs[:name] = name.to_s
       instance_eval &block if block_given?
     end
 
     def method_missing(name, *args, &block)
-      @attrs[:children] ||= {} 
-
-      # Init from kind
-      kind = @@kinds[name]
-      if kind and kind.for
-        init_class = @@init_methods[kind.for] 
-        args[1] ||= {}
-        args[1][:kind] = kind.name
-      else
-        #from init methods
-        init_class = @@init_methods[name]
-      end
-
-      if init_class
-        # Making children objects
-        args[1] ||= {}
-        args[1][:parent] = self
-        @attrs[:children][args[0].to_sym] = init_class.send(:new, *args, &block )
-      else
+      unless Node.add_node(name, self, *args, &block)
         case args.size
           when 0
             child = @attrs[:children][name]
@@ -85,7 +67,7 @@ module Lipa
 
             val = @attrs[name]
             if val.class == Proc
-              val.call
+              instance_eval &(val)
             else
               val
             end
@@ -159,6 +141,40 @@ module Lipa
         end
       else
         @@init_methods
+      end
+    end
+
+    # Making children node
+    #
+    # @param [String] name of initial method or kind
+    # @param [Node] parent node
+    # @param args of node
+    # @param block for node
+    def self.add_node(name, parent, *args, &block)
+      parent.attrs[:children] ||= {} 
+       
+      # Init from kind
+      kind = @@kinds[name]
+      if kind and kind.for
+        init_class = @@init_methods[kind.for] 
+        args[1] ||= {}
+        args[1][:kind] = kind.name
+      else
+        #from init methods
+        init_class = @@init_methods[name]
+      end
+
+      if init_class
+        args[1] ||= {}
+        args[1][:parent] = parent 
+        child_name = args[0].to_sym
+
+        existen_child = parent.attrs[:children][child_name]
+        args[1] = existen_child.attrs.merge(args[1]) if existen_child
+          
+        parent.attrs[:children][child_name] = init_class.send(:new, *args, &block )
+      else  
+        nil
       end
     end
   end
