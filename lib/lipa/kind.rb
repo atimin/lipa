@@ -38,6 +38,19 @@ module Lipa
   #
   # @see Tree#kind
   class Kind < Node
+    def method_missing(name, *args, &block)
+      unless Node.add_node(name, self, *args, &block)
+        # only assigment
+        if args.size == 1
+          name = name.to_s
+          name["="] = "" if name["="]
+          @attrs[name.to_sym] = args[0]
+        else
+          super
+        end
+      end
+    end
+
   end
 end
 
