@@ -54,6 +54,7 @@ module Lipa
     #   some_kind :some_instance 
     def kind(name, attrs = {}, &block)
       @@kinds ||= {}
+      attrs[:for] ||= :node  
       @@kinds[name.to_sym] = Lipa::Kind.new(name, attrs, &block)
     end
 

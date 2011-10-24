@@ -20,8 +20,8 @@ describe Lipa::Kind do
         end
       end
       # Set #2
-      kind :folder, :for => :node
-      kind :file, :for => :node do 
+      kind :folder
+      kind :file do 
         size 1024
         ext "jpg"
       end

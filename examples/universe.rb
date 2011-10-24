@@ -2,11 +2,11 @@ $:.unshift File.join(File.dirname(__FILE__),'../lib')
 require 'lipa'
 
 un = Lipa::Tree.new :universe do 
-  kind :planet_system, :for => :node do
+  kind :planet_system do
     num_planet 0
   end
 
-  kind :planet, :for => :node do 
+  kind :planet do 
     has_live false
     has_water false
     number 0

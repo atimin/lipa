@@ -1,5 +1,6 @@
 Next Release-0.3.0
 -----------------------
+- Kind for node is default
 - Deleted deprecated classes ```Lipa::Leaf``` and ```Lipa::Branch```
 - Deleted deprecated methods ```Node#leafs``` and ```Node#branch```
 
