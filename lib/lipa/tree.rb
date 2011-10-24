@@ -71,5 +71,19 @@ module Lipa
       tree, path = uri.split("://")
       @@trees[tree][path] if @@trees[tree] 
     end
+
+    # Load description tree from file
+    #
+    # @param path to file
+    #
+    # @example 
+    #   Lipa::Tree.new "lipa" do
+    #     load_from File.dirname(__FILE__) + "/data/part_of_tree.rb"
+    #   end
+    def load_from(path)
+      File.open(path,'r') do |f|
+        instance_eval f.read
+      end
+    end
   end
 end

@@ -14,11 +14,17 @@ describe Lipa::Tree do
           node :obj_3 
         end
       end
+
+      load_from File.dirname(__FILE__) + "/data/part_of_tree.rb"
     end
   end
 
   it "should have access any object in trees" do 
     Lipa::Tree["lipa://group_1/obj_1"].should eql(@tree["group_1/obj_1"])
+  end
+
+  it 'should load description from files' do
+    @tree.external_node.msg.should eql("Hello!")
   end
 end
 
