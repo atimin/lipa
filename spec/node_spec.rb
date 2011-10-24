@@ -23,6 +23,10 @@ describe Lipa::Node do
     @node.name.should eql("obj_1")
   end
 
+  it 'should have tree' do
+    @node.tree.should eql(@tree)
+  end
+
   it 'should have parent' do
     @node.parent.should eql(@tree["group_1"])
   end

@@ -1,5 +1,6 @@
 Next Release-0.3.0
 -----------------------
+- Added tree attribute for node
 - Added load description of trees from external files
 - Kind for node is default
 - Deleted deprecated classes ```Lipa::Leaf``` and ```Lipa::Branch```

@@ -30,15 +30,18 @@ module Lipa
   #   tree = Lipa::Tree.new :tree do 
   #     node :object do
   #       param_1 "some_param"
-  #       param_2 lambda{1+2}
+  #       param_2 Proc.new{1+2}
   #     end
   #   end
   #
   #   tree.object.param_1 #=> "some_param"
   #   tree.object.param_2 #=> 3 
   class Tree < Node
+    attr_reader :kinds
     @@trees = {}
     def initialize(name, attrs = {}, &block_given)
+      @kinds = {}
+      attrs[:tree] = self
       super
       @@trees.merge! name.to_s => self
     end
@@ -53,9 +56,9 @@ module Lipa
     #
     #   some_kind :some_instance 
     def kind(name, attrs = {}, &block)
-      @@kinds ||= {}
       attrs[:for] ||= :node  
-      @@kinds[name.to_sym] = Lipa::Kind.new(name, attrs, &block)
+      attrs[:tree] = self
+      @kinds[name.to_sym] = Lipa::Kind.new(name, attrs, &block)
     end
 
     alias_method :template, :kind

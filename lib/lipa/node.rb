@@ -42,14 +42,13 @@ module Lipa
   class Node 
     attr_accessor :attrs
     @@init_methods = {:node => self}
-    @@kinds = {}
 
     def initialize(name, attrs = {}, &block)
       @attrs = {} 
 
       #init attrs from template
       if attrs[:kind]
-        kind = @@kinds[attrs[:kind].to_sym]
+        kind = attrs[:tree].kinds[attrs[:kind].to_sym]
         @attrs.merge! kind.attrs if kind
       end
 
@@ -154,7 +153,7 @@ module Lipa
       parent.attrs[:children] ||= {} 
        
       # Init from kind
-      kind = @@kinds[name]
+      kind = parent.attrs[:tree].kinds[name]
       if kind and kind.for
         init_class = @@init_methods[kind.for] 
         args[1] ||= {}
@@ -166,7 +165,8 @@ module Lipa
 
       if init_class
         args[1] ||= {}
-        args[1][:parent] = parent 
+        args[1][:parent] = parent
+        args[1][:tree] = parent.attrs[:tree]
         child_name = args[0].to_sym
 
         existen_child = parent.attrs[:children][child_name]
