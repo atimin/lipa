@@ -44,16 +44,9 @@ module Lipa
     @@init_methods = {:node => self}
 
     def initialize(name, attrs = {}, &block)
-      @attrs = {} 
-
-      #init attrs from template
-      if attrs[:kind]
-        kind = attrs[:tree].kinds[attrs[:kind].to_sym]
-        @attrs.merge! kind.attrs if kind
-      end
-
-      @attrs.merge! attrs
+      @attrs = attrs
       @attrs[:name] = name.to_s
+      @attrs[:children] ||= {}
       instance_eval &block if block_given?
     end
 
@@ -150,29 +143,44 @@ module Lipa
     # @param args of node
     # @param block for node
     def self.add_node(name, parent, *args, &block)
-      parent.attrs[:children] ||= {} 
-       
+      # OPTIMIZE
       # Init from kind
+      attrs = {}
+      args[1] ||= {}
+      attrs.merge!(args[1])
+
       kind = parent.attrs[:tree].kinds[name]
       if kind and kind.for
-        init_class = @@init_methods[kind.for] 
-        args[1] ||= {}
-        args[1][:kind] = kind.name
+        init_class = @@init_methods[kind.for]
+        attrs[:kind] = kind.name
+        attrs.merge!(kind.attrs) do |key,v1,v2|
+          v1
+        end
       else
         #from init methods
         init_class = @@init_methods[name]
       end
 
       if init_class
-        args[1] ||= {}
-        args[1][:parent] = parent
-        args[1][:tree] = parent.attrs[:tree]
+        attrs[:parent] = parent
+        attrs[:tree] = parent.attrs[:tree]
         child_name = args[0].to_sym
 
         existen_child = parent.attrs[:children][child_name]
-        args[1] = existen_child.attrs.merge(args[1]) if existen_child
-          
-        parent.attrs[:children][child_name] = init_class.send(:new, *args, &block )
+        attrs = existen_child.attrs.merge(args[1]) if existen_child
+
+        args[1].merge!(attrs) do |key,v1,v2| 
+          v1
+        end
+
+        if kind
+          parent.attrs[:children][child_name] = init_class.send(:new, *args.clone, &kind.block)
+          parent.attrs[:children][child_name].attrs.merge!(attrs)
+          parent.attrs[:children][child_name].instance_exec(&block) if block_given?
+        else
+          parent.attrs[:children][child_name] = init_class.send(:new, *args, &block )
+        end
+        true
       else  
         nil
       end

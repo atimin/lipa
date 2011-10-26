@@ -37,20 +37,20 @@ module Lipa
   #   tree["some_instance"].param_1 #=> "some_param"
   #
   # @see Tree#kind
-  class Kind < Node
-    def method_missing(name, *args, &block)
-      unless Node.add_node(name, self, *args, &block)
-        # only assigment
-        if args.size == 1
-          name = name.to_s
-          name["="] = "" if name["="]
-          @attrs[name.to_sym] = args[0]
-        else
-          super
-        end
+  class Kind
+    attr_reader :attrs, :name, :for, :block
+    def initialize(name, attrs = {}, &block)
+      if attrs[:for]
+        @for = attr[:for]
+        attrs[:for] = nil
+      else
+        @for = :node
       end
-    end
 
+      @attrs = attrs
+      @name = name.to_sym
+      @block = block if block_given?
+    end
   end
 end
 

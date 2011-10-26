@@ -14,6 +14,21 @@ describe Lipa::Node do
           node :obj_3 
         end
       end
+
+      kind :some_kind do
+        param_1 "something"
+      end
+
+      some_kind :obj_x do 
+        some_kind :obj_y1 do 
+          some_kind :obj_z1
+          some_kind :obj_z2
+        end
+
+        some_kind :obj_y2 do 
+          some_kind :obj_z3
+        end
+      end
     end
 
     @node = @tree["group_1/obj_1"]
@@ -25,6 +40,10 @@ describe Lipa::Node do
 
   it 'should have tree' do
     @node.tree.should eql(@tree)
+  end
+
+  it 'should kind' do
+    @tree["obj_x"].kind.should eql(:some_kind)
   end
 
   it 'should have parent' do
@@ -57,8 +76,7 @@ describe Lipa::Node do
   end
 
   it 'should have children' do
-    @node.children[:obj_2].should eql(@tree["group_1/obj_1/obj_2"])
-    @node.children[:obj_3].should eql(@tree["group_1/obj_1/obj_3"])
+    @node.children.values.should eql([@tree["group_1/obj_1/obj_2"], @tree["group_1/obj_1/obj_3"]])
   end
 
   it 'should have [] for access entry by path' do
@@ -67,5 +85,11 @@ describe Lipa::Node do
 
   it 'should access for children by .' do
     @node.obj_3.should eql(@tree["group_1/obj_1/obj_3"])
+  end
+
+  it 'should __' do
+    @tree.obj_x.obj_y1.children.keys.should eql([:obj_z1, :obj_z2])
+    @tree.obj_x.children.keys.should eql([:obj_y1, :obj_y2])
+    @tree.obj_x.obj_y2.obj_z3.children.keys.should eql([])
   end
 end
