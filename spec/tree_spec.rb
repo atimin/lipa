@@ -8,7 +8,7 @@ describe Lipa::Tree do
 
         node :obj_1, :attr_1 => 5 do
           attr_2 3
-          attr_3 Proc.new{attr_1 + attr_2}
+          attr_3 run{attr_1 + attr_2}
 
           node :obj_2 
           node :obj_3 

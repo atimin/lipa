@@ -3,7 +3,7 @@ require "lipa"
 
 store = Lipa::Tree.new :store do 
   kind :category do
-    unit_count Proc.new {
+    unit_count run{
       count = 0
       children.values.each do |child|  
         case child.kind
@@ -17,7 +17,7 @@ store = Lipa::Tree.new :store do
       count
     }
 
-    total_cost Proc.new {
+    total_cost  run{
       cost = 0
       children.values.each do |child|  
         case child.kind

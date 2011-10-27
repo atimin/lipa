@@ -58,6 +58,7 @@ module Lipa
             return child if child
 
             val = @attrs[name]
+            super unless val
             if val.class == Proc
               instance_eval &(val)
             else
@@ -107,6 +108,10 @@ module Lipa
       if block_given?
         Lipa::Bunch.new(self, attrs, &block)
       end
+    end
+
+    def run(&block)
+      block
     end
 
     # Accesor for methods for initialization

@@ -9,7 +9,7 @@ describe Lipa::Kind do
         object :obj_x do
           attr_0 "from_kind"
           attr_1 "from_kind"
-          attr_3 Proc.new{ attr_2 * 2}
+          attr_3 run{ attr_2 * 2}
         end
       end
 

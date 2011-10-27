@@ -1,7 +1,8 @@
 Next Release-0.3.0
 -----------------------
-- Added tree attribute for node
-- Added load description of trees from external files
+- Added ```Node#run``` for wraping code
+- Added ```tree``` attribute for node
+- Added load description of trees from external files ```Tree#load_from```
 - Kind for node is default
 - Deleted deprecated classes ```Lipa::Leaf``` and ```Lipa::Branch```
 - Deleted deprecated methods ```Node#leafs``` and ```Node#branch```

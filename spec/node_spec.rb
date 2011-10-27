@@ -8,7 +8,7 @@ describe Lipa::Node do
 
         node :obj_1, :attr_1 => 5 do
           attr_2 3
-          attr_3 Proc.new{attr_1 + attr_2}
+          attr_3 run{attr_1 + attr_2}
 
           node :obj_2 
           node :obj_3 
@@ -87,7 +87,7 @@ describe Lipa::Node do
     @node.obj_3.should eql(@tree["group_1/obj_1/obj_3"])
   end
 
-  it 'should __' do
+  it 'should not have bug in tree of kind objects' do
     @tree.obj_x.obj_y1.children.keys.should eql([:obj_z1, :obj_z2])
     @tree.obj_x.children.keys.should eql([:obj_y1, :obj_y2])
     @tree.obj_x.obj_y2.obj_z3.children.keys.should eql([])
