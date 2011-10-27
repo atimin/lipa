@@ -30,12 +30,12 @@ module Lipa
   #   tree = Lipa::Tree.new :tree do 
   #     node :object do
   #       param_1 "some_param"
-  #       param_2 Proc.new{1+2}
+  #       param_2 run{param_1 + "!!!!"}
   #     end
   #   end
   #
   #   tree.object.param_1 #=> "some_param"
-  #   tree.object.param_2 #=> 3 
+  #   tree.object.param_2 #=> "some_param!!!!"
   class Tree < Node
     attr_reader :kinds
     @@trees = {}

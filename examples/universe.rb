@@ -3,7 +3,13 @@ require 'lipa'
 
 un = Lipa::Tree.new :universe do 
   kind :planet_system do
-    num_planet 0
+    num_planet run{
+      count = 0
+      children.values.each do |planet|
+        count += 1 if planet.kind == :planet
+      end
+      count
+    }
   end
 
   kind :planet do 
@@ -39,4 +45,4 @@ puts un.sun_system.earth.number
 puts un.sun_system.earth.radius
 puts un.sun_system.earth.has_live
 puts un.sun_system.earth.has_water
-puts un.sun_system.earth.moon.radius
+puts un.sun_system.num_planet

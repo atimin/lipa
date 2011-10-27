@@ -27,13 +27,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 module Lipa
   # Base object for all nested object of tree
   # It supports initialization 
-  # attributes by constant, variable or Proc object
+  # attributes by constant, variable or code
   #
   # @example
   #   tree = Lipa::Tree.new :tree do 
   #     node :object, :param_1 => 4 do
   #       param_2 "some_param"
-  #       param_3 Proc.new{1+param_3}
+  #       param_3 run{1+param_3}
   #     end
   #   end
   #   tree.object.param_1 #=> 4
@@ -111,6 +111,15 @@ module Lipa
       end
     end
 
+    # Wraping code in attribute
+    #
+    # @param block of code
+    #
+    # @example
+    #   Tree.new :tree do
+    #     param_1 10
+    #     param_2 run{ param_1 * 10 }
+    #   end
     def run(&block)
       block
     end
