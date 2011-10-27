@@ -1,9 +1,39 @@
 Next Release-0.3.0
 -----------------------
+- Added access to object by path in Unix style for ```Node#[]```
+
+  ```Ruby
+    node["dir_1/dir_2/searched_obj"] 
+    node["searched_obj"] 
+    node["./searched_obj"] 
+    node["../dir_2/searched_obj"] 
+  ```
+
 - Added ```Node#run``` for wraping code
+
+  ``` Ruby
+    node :some_node do
+      some_param run{ rand(10) }
+    end
+  ```
+- Added load description of trees from external files ```Tree#load_from```:
+  
+  ```Ruby
+    Lipa::Tree.new "lipa" do
+      load_from File.dirname(__FILE__) + "/data/part_of_tree.rb"
+    end
+  ```
+
+- Kind for node is default:
+
+  ```Ruby
+  t = Lipa::Tree.new("1") do
+    kind :some_kind
+
+    some_kind :obj_1
+  end
+  ```
 - Added ```tree``` attribute for node
-- Added load description of trees from external files ```Tree#load_from```
-- Kind for node is default
 - Deleted deprecated classes ```Lipa::Leaf``` and ```Lipa::Branch```
 - Deleted deprecated methods ```Node#leafs``` and ```Node#branch```
 

@@ -74,16 +74,30 @@ module Lipa
       end
     end
 
-    # Accessor for node by path
+    # Accessor for node by path in Unix style
     # @param [String] path nodes
     # @return [Node] node
     #
     # @example
-    #   tree["dir_1/dir_2/searched_obj"] 
+    #   dir_2["dir_1/dir_2/searched_obj"] 
+    #   dir_2["searched_obj"] 
+    #   dir_2["./searched_obj"] 
+    #   dir_2["../dir_2/searched_obj"] 
     def [](path)
       # TODO:  Add Unix style pathname defenition
+
       split_path = path.split("/")   
-      obj = @attrs[:children][split_path[0].to_sym]
+      obj = case split_path[0]
+      when ""
+        @attrs[:tree]
+      when ".."
+        @attrs[:parent]
+      when "."
+        self
+      else
+        @attrs[:children][split_path[0].to_sym]
+      end
+
       if obj
         if split_path.size > 1
           obj[split_path[1..-1].join("/")]
