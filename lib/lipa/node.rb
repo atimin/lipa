@@ -81,6 +81,7 @@ module Lipa
     # @example
     #   tree["dir_1/dir_2/searched_obj"] 
     def [](path)
+      # TODO:  Add Unix style pathname defenition
       split_path = path.split("/")   
       obj = @attrs[:children][split_path[0].to_sym]
       if obj
@@ -112,6 +113,16 @@ module Lipa
 
     def run(&block)
       block
+    end
+
+    def ref(path) 
+      # TODO: Implement reference to othe object
+      # @example
+      #
+      #   node :node_1 
+      #   node :node_2 do
+      #     node_1 ref("../node_1")
+      #   end
     end
 
     # Accesor for methods for initialization
@@ -148,7 +159,7 @@ module Lipa
     # @param args of node
     # @param block for node
     def self.add_node(name, parent, *args, &block)
-      # OPTIMIZE
+      # OPTIMIZE: This code looks bad
       # Init from kind
       attrs = {}
       args[1] ||= {}

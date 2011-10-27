@@ -40,6 +40,7 @@ module Lipa
   class Kind
     attr_reader :attrs, :name, :for, :block
     def initialize(name, attrs = {}, &block)
+      # OPTIMIZE: Make it shorter
       if attrs[:for]
         @for = attr[:for]
         attrs[:for] = nil
