@@ -1,6 +1,7 @@
-Next Release-0.3.0
+2011-10-27 Release-0.3.0
 -----------------------
 - Added supporting references to other object as attribute ```Node#ref```
+
   ```Ruby
     node :node_1 
     node :node_2 do
