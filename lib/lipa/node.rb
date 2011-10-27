@@ -136,14 +136,17 @@ module Lipa
       block
     end
 
+    # Reference to othe object
+    # @param path in Unix style
+    #
+    # @example
+    #
+    #   node :node_1 
+    #   node :node_2 do
+    #     param_1 ref("../node_1")
+    #   end
     def ref(path) 
-      # TODO: Implement reference to othe object
-      # @example
-      #
-      #   node :node_1 
-      #   node :node_2 do
-      #     node_1 ref("../node_1")
-      #   end
+     Proc.new { self[path] }
     end
 
     # Accesor for methods for initialization

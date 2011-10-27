@@ -9,11 +9,14 @@ describe Lipa::Node do
         node :obj_1, :attr_1 => 5 do
           attr_2 3
           attr_3 run{attr_1 + attr_2}
+          attr_4 ref("/other_object")
 
           node :obj_2 
           node :obj_3 
         end
       end
+
+      node :other_object
 
       kind :some_kind do
         param_1 "something"
@@ -91,5 +94,9 @@ describe Lipa::Node do
     @tree.obj_x.obj_y1.children.keys.should eql([:obj_z1, :obj_z2])
     @tree.obj_x.children.keys.should eql([:obj_y1, :obj_y2])
     @tree.obj_x.obj_y2.obj_z3.children.keys.should eql([])
+  end
+
+  it 'should have access other object by reference' do
+    @node.attr_4.should eql(@tree.other_object)
   end
 end

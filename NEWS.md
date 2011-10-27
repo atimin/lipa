@@ -1,5 +1,13 @@
 Next Release-0.3.0
 -----------------------
+- Added supporting references to other object as attribute ```Node#ref```
+  ```Ruby
+    node :node_1 
+    node :node_2 do
+      param_1 ref("../node_1")
+    end
+  ```
+
 - Added access to object by path in Unix style for ```Node#[]```
 
   ```Ruby
