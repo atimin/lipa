@@ -1,5 +1,4 @@
-Lipa - DSL for description treelike structures in Ruby [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=flipback&url=https://github.com/flipback/lipa&title=lipa&language=en_GB&tags=github&category=software)
-
+Lipa - DSL for description treelike structures in Ruby
 =======================================================
 
 Features
