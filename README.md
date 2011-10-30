@@ -1,4 +1,4 @@
-Lipa - DSL for description treelike structures in Ruby
+Lipa - DSL for description treelike structures in Ruby [![Build Status](https://secure.travis-ci.org/flipback/lipa.png)](http://travis-ci.org/flipback/lipa)
 =======================================================
 
 Features
