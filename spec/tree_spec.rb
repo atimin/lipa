@@ -26,5 +26,9 @@ describe Lipa::Tree do
   it 'should load description from files' do
     @tree.external_node.msg.should eql("Hello!")
   end
+
+  it 'should support absolute path for access to object' do
+    @tree["/group_1/obj_1"].should eql(@tree["group_1/obj_1"])
+  end
 end
 
