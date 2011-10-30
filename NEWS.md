@@ -1,3 +1,7 @@
+NEXT Release-0.3.1
+----------------------
+- Fixed bug in Lipa::Node. Attributes is working with false values.
+
 2011-10-27 Release-0.3.0
 -----------------------
 - Added supporting references to other object as attribute ```Node#ref```

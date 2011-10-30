@@ -16,7 +16,9 @@ describe Lipa::Node do
         end
       end
 
-      node :other_object
+      node :other_object do 
+        bool_attr false
+      end
 
       kind :some_kind do
         param_1 "something"
@@ -98,5 +100,9 @@ describe Lipa::Node do
 
   it 'should have access other object by reference' do
     @node.attr_4.should eql(@tree.other_object)
+  end
+
+  it 'should have attrs with false ' do
+    @tree['other_object'].bool_attr.should be_false
   end
 end

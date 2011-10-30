@@ -58,7 +58,9 @@ module Lipa
             return child if child
 
             val = @attrs[name]
-            super unless val
+
+            super if val.nil? #Raise MethodError if don't have it
+
             if val.class == Proc
               instance_eval &(val)
             else
