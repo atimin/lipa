@@ -79,7 +79,7 @@ describe Lipa::Node do
   end
 
   it 'should have children' do
-    @node.children.values.should eql([@tree["group_1/obj_1/obj_2"], @tree["group_1/obj_1/obj_3"]])
+    @node.children.values.should =~ [@tree["group_1/obj_1/obj_2"], @tree["group_1/obj_1/obj_3"]]
   end
 
   it 'should have [] for access entry by path' do
@@ -91,9 +91,9 @@ describe Lipa::Node do
   end
 
   it 'should not have bug in tree of kind objects' do
-    @tree.obj_x.obj_y1.children.keys.should eql([:obj_z1, :obj_z2])
-    @tree.obj_x.children.keys.should eql([:obj_y1, :obj_y2])
-    @tree.obj_x.obj_y2.obj_z3.children.keys.should eql([])
+    @tree.obj_x.obj_y1.children.keys.should =~ [:obj_z1, :obj_z2]
+    @tree.obj_x.children.keys.should =~ [:obj_y1, :obj_y2]
+    @tree.obj_x.obj_y2.obj_z3.children.keys.should =~ []
   end
 
   it 'should have access other object by reference' do
