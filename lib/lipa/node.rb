@@ -206,8 +206,11 @@ module Lipa
       if init_class
         attrs[:parent] = parent
         attrs[:tree] = parent.attrs[:tree]
-        child_name = args[0].to_sym
+        parent.attrs[:full_name] ||= ""
+        attrs[:full_name] =  parent.attrs[:full_name] + "/" + args[0].to_s
 
+
+        child_name = args[0].to_sym
         existen_child = parent.attrs[:children][child_name]
         attrs = existen_child.attrs.merge(args[1]) if existen_child
 

@@ -43,6 +43,10 @@ describe Lipa::Node do
     @node.name.should eql("obj_1")
   end
 
+  it 'should have full_name' do
+    @node.full_name.should eql("/group_1/obj_1") 
+  end
+
   it 'should have tree' do
     @node.tree.should eql(@tree)
   end
@@ -105,4 +109,5 @@ describe Lipa::Node do
   it 'should have attrs with false ' do
     @tree['other_object'].bool_attr.should be_false
   end
+
 end
