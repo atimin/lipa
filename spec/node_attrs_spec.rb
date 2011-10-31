@@ -39,25 +39,6 @@ describe Lipa::Node do
     @node = @tree["group_1/obj_1"]
   end
 
-  it 'should have name' do
-    @node.name.should eql("obj_1")
-  end
-
-  it 'should have full_name' do
-    @node.full_name.should eql("/group_1/obj_1") 
-  end
-
-  it 'should have tree' do
-    @node.tree.should eql(@tree)
-  end
-
-  it 'should kind' do
-    @tree["obj_x"].kind.should eql(:some_kind)
-  end
-
-  it 'should have parent' do
-    @node.parent.should eql(@tree["group_1"])
-  end
 
   it 'should have descripted attr_1 eql 5' do
     @node.attr_1.should eql(5)
@@ -84,16 +65,8 @@ describe Lipa::Node do
     @node.attrs[:attr_1].should eql(9)
   end
 
-  it 'should have children' do
-    @node.children.values.should =~ [@tree["group_1/obj_1/obj_2"], @tree["group_1/obj_1/obj_3"]]
-  end
-
   it 'should have [] for access entry by path' do
     @node["obj_3"].should eql(@tree["group_1/obj_1/obj_3"])
-  end
-
-  it 'should access for children by .' do
-    @node.obj_3.should eql(@tree["group_1/obj_1/obj_3"])
   end
 
   it 'should not have bug in tree of kind objects' do

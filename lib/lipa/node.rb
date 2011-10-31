@@ -52,7 +52,11 @@ module Lipa
       @full_name = attrs[:full_name] 
       @kind = attrs[:kind]
 
-      attrs[:tree], attrs[:parent]  = nil
+      #clear attrs 
+      instance_variables.each do |var|  
+        attrs.delete(var[1..-1].to_sym)
+      end
+
       instance_eval &block if block_given?
     end
 
