@@ -40,7 +40,7 @@ module Lipa
   #   tree.object.param_2 #=> "some_param"
   #   tree.object.param_3 #=> 5
   class Node 
-    attr_accessor :attrs, :name, :children, :tree, :parent, :full_name
+    attr_accessor :attrs, :name, :children, :tree, :parent, :full_name, :kind
     @@init_methods = {:node => self}
 
     def initialize(name, attrs = {}, &block)
@@ -50,6 +50,7 @@ module Lipa
       @parent = attrs[:parent] 
       @tree = attrs[:tree]
       @full_name = attrs[:full_name] 
+      @kind = attrs[:kind]
 
       attrs[:tree], attrs[:parent]  = nil
       instance_eval &block if block_given?
@@ -196,11 +197,11 @@ module Lipa
       args[1] ||= {}
       attrs.merge!(args[1])
 
-      kind = parent.tree.kinds[name]
-      if kind and kind.for
-        init_class = @@init_methods[kind.for]
-        attrs[:kind] = kind.name
-        attrs.merge!(kind.attrs) do |key,v1,v2|
+      k = parent.tree.kinds[name]
+      if k and k.for
+        init_class = @@init_methods[k.for]
+        attrs[:kind] = k.name
+        attrs.merge!(k.attrs) do |key,v1,v2|
           v1
         end
       else
@@ -223,8 +224,8 @@ module Lipa
           v1
         end
 
-        if kind
-          parent.children[child_name] = init_class.send(:new, *args.clone, &kind.block)
+        if k
+          parent.children[child_name] = init_class.send(:new, *args.clone, &k.block)
           parent.children[child_name].attrs.merge!(attrs)
           parent.children[child_name].instance_exec(&block) if block_given?
         else
