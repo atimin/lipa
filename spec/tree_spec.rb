@@ -19,6 +19,14 @@ describe Lipa::Tree do
     end
   end
 
+  it 'should have name "/"' do
+    @tree.name.should eql("/")
+  end
+
+  it 'should have full_name "/"' do
+    @tree.full_name.should eql("/")
+  end
+
   it "should have access any object in trees" do 
     Lipa::Tree["lipa://group_1/obj_1"].should eql(@tree["group_1/obj_1"])
   end

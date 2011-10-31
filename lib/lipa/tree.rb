@@ -44,6 +44,8 @@ module Lipa
       attrs[:tree] = self
       super
       @@trees.merge! name.to_s => self
+      @name = "/"
+      @full_name = "/"
     end
 
     # Initialize of kind

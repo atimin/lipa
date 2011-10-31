@@ -4,6 +4,7 @@ NEXT Release-1.0.0dev
 - Added :full_name attribute to Lipa::Node
 - Attributes :name, :parent, :children, :tree, :full_name, :kind are instance variables
 - Fixed bug for calls: `node[""] #=> self` and `node["/"] #=> tree`
+- All instances of Lipa::Tree have name an full name equal "/"
 
 2011-10-27 Release-0.3.0
 -----------------------
