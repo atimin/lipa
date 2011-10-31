@@ -34,4 +34,12 @@ describe "access to object by path in Unix style" do
   it 'should have access by absolute path' do
     @node["/obj_1/obj_2/obj_3"].should eql(@tree.obj_1.obj_2.obj_3)
   end
+
+  it 'should have access to self' do
+    @node[""].should eql(@node)
+  end
+
+  it 'should have access to root' do
+    @node["/"].should eql(@tree)
+  end
 end

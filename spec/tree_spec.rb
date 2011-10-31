@@ -30,5 +30,10 @@ describe Lipa::Tree do
   it 'should support absolute path for access to object' do
     @tree["/group_1/obj_1"].should eql(@tree["group_1/obj_1"])
   end
+
+  it 'should support root access' do
+    @tree[""].should eql(@tree)
+  end
+
 end
 

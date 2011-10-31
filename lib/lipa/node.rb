@@ -96,8 +96,14 @@ module Lipa
     #   dir_2["./searched_obj"] 
     #   dir_2["../dir_2/searched_obj"] 
     def [](path)
-      split_path = path.split("/")   
+      split_path = path.split("/")  
       obj = case split_path[0]
+      when nil
+        if path == "/"
+          tree
+        elsif path == ""
+          self
+        end
       when ""
         tree
       when ".."
