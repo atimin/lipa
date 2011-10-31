@@ -24,5 +24,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 module Lipa 
-  VERSION = "0.3.0"
+  VERSION = "1.0.0dev"
 end

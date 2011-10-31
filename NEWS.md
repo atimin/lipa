@@ -1,7 +1,8 @@
-NEXT Release-0.4.0
+NEXT Release-1.0.0dev
 ----------------------
 - Fixed bug in Lipa::Node. Attributes is working with false values.
 - Added :full_name attribute to Lipa::Node
+- Attributes :name, :parent, :children, :tree, :full_name are instance variables
 
 2011-10-27 Release-0.3.0
 -----------------------

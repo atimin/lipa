@@ -40,13 +40,18 @@ module Lipa
   #   tree.object.param_2 #=> "some_param"
   #   tree.object.param_3 #=> 5
   class Node 
-    attr_accessor :attrs
+    attr_accessor :attrs, :name, :children, :tree, :parent, :full_name
     @@init_methods = {:node => self}
 
     def initialize(name, attrs = {}, &block)
       @attrs = attrs
-      @attrs[:name] = name.to_s
-      @attrs[:children] ||= {}
+      @name = name.to_s
+      @children ||= {}
+      @parent = attrs[:parent] 
+      @tree = attrs[:tree]
+      @full_name = attrs[:full_name] 
+
+      attrs[:tree], attrs[:parent]  = nil
       instance_eval &block if block_given?
     end
 
@@ -54,7 +59,7 @@ module Lipa
       unless Node.add_node(name, self, *args, &block)
         case args.size
           when 0
-            child = @attrs[:children][name]
+            child = children[name]
             return child if child
 
             val = @attrs[name]
@@ -89,13 +94,13 @@ module Lipa
       split_path = path.split("/")   
       obj = case split_path[0]
       when ""
-        @attrs[:tree]
+        tree
       when ".."
-        @attrs[:parent]
+        parent
       when "."
         self
       else
-        @attrs[:children][split_path[0].to_sym]
+        children[split_path[0].to_sym]
       end
 
       if obj
@@ -191,7 +196,7 @@ module Lipa
       args[1] ||= {}
       attrs.merge!(args[1])
 
-      kind = parent.attrs[:tree].kinds[name]
+      kind = parent.tree.kinds[name]
       if kind and kind.for
         init_class = @@init_methods[kind.for]
         attrs[:kind] = kind.name
@@ -205,13 +210,13 @@ module Lipa
 
       if init_class
         attrs[:parent] = parent
-        attrs[:tree] = parent.attrs[:tree]
-        parent.attrs[:full_name] ||= ""
-        attrs[:full_name] =  parent.attrs[:full_name] + "/" + args[0].to_s
+        attrs[:tree] = parent.tree
+        fn = parent.full_name || ""
+        attrs[:full_name] =  fn  + "/" + args[0].to_s
 
 
         child_name = args[0].to_sym
-        existen_child = parent.attrs[:children][child_name]
+        existen_child = parent.children[child_name]
         attrs = existen_child.attrs.merge(args[1]) if existen_child
 
         args[1].merge!(attrs) do |key,v1,v2| 
@@ -219,11 +224,11 @@ module Lipa
         end
 
         if kind
-          parent.attrs[:children][child_name] = init_class.send(:new, *args.clone, &kind.block)
-          parent.attrs[:children][child_name].attrs.merge!(attrs)
-          parent.attrs[:children][child_name].instance_exec(&block) if block_given?
+          parent.children[child_name] = init_class.send(:new, *args.clone, &kind.block)
+          parent.children[child_name].attrs.merge!(attrs)
+          parent.children[child_name].instance_exec(&block) if block_given?
         else
-          parent.attrs[:children][child_name] = init_class.send(:new, *args, &block )
+          parent.children[child_name] = init_class.send(:new, *args, &block )
         end
         true
       else  
