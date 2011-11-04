@@ -2,7 +2,7 @@ require 'lipa'
 
 describe Lipa::Node do
   before :all do
-    @tree =  Lipa::Tree.new "lipa" do
+    @tree =  root "lipa" do
       node :group_1 do 
         node :obj_1, :attr_1 => 5 do
 
@@ -28,8 +28,8 @@ describe Lipa::Node do
     @node.full_name.should eql("/group_1/obj_1") 
   end
 
-  it 'should have tree' do
-    @node.tree.should eql(@tree)
+  it 'should have root' do
+    @node.root.should eql(@tree)
   end
 
   it 'should kind' do

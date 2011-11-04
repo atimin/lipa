@@ -1,8 +1,8 @@
 require 'lipa'
 
-describe Lipa::Tree do 
+describe Lipa::Root do 
   before :all do
-    @tree =  Lipa::Tree.new "lipa" do
+    @tree =  root "lipa" do
       node :group_1 do 
         any_attr "any attr"
 
@@ -28,7 +28,7 @@ describe Lipa::Tree do
   end
 
   it "should have access any object in trees" do 
-    Lipa::Tree["lipa://group_1/obj_1"].should eql(@tree["group_1/obj_1"])
+    Lipa::Root["lipa://group_1/obj_1"].should eql(@tree["group_1/obj_1"])
   end
 
   it 'should load description from files' do

@@ -2,7 +2,7 @@ require 'lipa'
 
 describe Lipa::Bunch do
   before :all do
-    @tree =  Lipa::Tree.new "lipa" do
+    @tree =  root "lipa" do
       with :attr_1 => 100, :attr_2 => "attr_2" do 
         node :obj_4
         node :obj_5
@@ -24,7 +24,7 @@ describe Lipa::Bunch do
   end
   
   it 'should have "with" initial method' do
-    t = Lipa::Tree.new("1") do
+    t = root "t" do
       with :attr_1 => 999 do 
         node :obj_1
       end
@@ -33,7 +33,7 @@ describe Lipa::Bunch do
   end
 
   it 'should work with kinds' do
-    t = Lipa::Tree.new("1") do
+    t = root "t" do
       kind :some_kind, :for => :node
 
       with :attr_1 => 999 do 

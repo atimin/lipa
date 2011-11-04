@@ -2,7 +2,7 @@ require 'lipa'
 
 describe Lipa::Kind do
   before :all  do
-    @tree = Lipa::Tree.new :tree do 
+    @tree = root :tree do 
       # Set #1 
       kind :object, :for => :node
       kind :group, :for => :node do 

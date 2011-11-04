@@ -2,7 +2,7 @@ require 'lipa'
 
 describe Lipa::Node do
   before :all do
-    @tree =  Lipa::Tree.new "lipa" do
+    @tree =  root "lipa" do
       node :group_1 do 
         any_attr "any attr"
 

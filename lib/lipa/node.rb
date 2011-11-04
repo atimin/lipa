@@ -30,7 +30,7 @@ module Lipa
   # attributes by constant, variable or code
   #
   # @example
-  #   tree = Lipa::Tree.new :tree do 
+  #   tree = root :tree do 
   #     node :object, :param_1 => 4 do
   #       param_2 "some_param"
   #       param_3 run{1+param_3}
@@ -40,7 +40,7 @@ module Lipa
   #   tree.object.param_2 #=> "some_param"
   #   tree.object.param_3 #=> 5
   class Node 
-    attr_accessor :attrs, :name, :children, :tree, :parent, :full_name, :kind
+    attr_accessor :attrs, :name, :children, :root, :parent, :full_name, :kind
     @@init_methods = {:node => self}
 
     def initialize(name, attrs = {}, &block)
@@ -48,7 +48,7 @@ module Lipa
       @name = name.to_s
       @children ||= {}
       @parent = attrs[:parent] 
-      @tree = attrs[:tree]
+      @root = attrs[:root]
       @full_name = attrs[:full_name] 
       @kind = attrs[:kind]
 
@@ -100,12 +100,12 @@ module Lipa
       obj = case split_path[0]
       when nil
         if path == "/"
-          tree
+          root
         elsif path == ""
           self
         end
       when ""
-        tree
+        root
       when ".."
         parent
       when "."
@@ -126,7 +126,7 @@ module Lipa
     # Initial method for group description
     # 
     # @example
-    #   tree = Lipa::Tree.new :tree do 
+    #   tree = root :tree do 
     #     with :param_1 => "some_param" do
     #       node :obj_1
     #       node :obj_2
@@ -146,7 +146,7 @@ module Lipa
     # @param block of code
     #
     # @example
-    #   Tree.new :tree do
+    #   root :tree do
     #     param_1 10
     #     param_2 run{ param_1 * 10 }
     #   end
@@ -177,7 +177,7 @@ module Lipa
     #     init_methods :folder
     #   end
     #
-    #   fls = Lipa::Tree.new :folders do
+    #   fls = root :folders do
     #     folder :folder_1 do
     #       param_1 "some_param
     #     end
@@ -207,7 +207,7 @@ module Lipa
       args[1] ||= {}
       attrs.merge!(args[1])
 
-      k = parent.tree.kinds[name]
+      k = parent.root.kinds[name]
       if k and k.for
         init_class = @@init_methods[k.for]
         attrs[:kind] = k.name
@@ -221,7 +221,7 @@ module Lipa
 
       if init_class
         attrs[:parent] = parent
-        attrs[:tree] = parent.tree
+        attrs[:root] = parent.root
         fn = parent.full_name || ""
         attrs[:full_name] =  fn  + "/" + args[0].to_s
 

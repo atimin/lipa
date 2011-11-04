@@ -27,4 +27,8 @@ require "lipa/version"
 require "lipa/node"
 require "lipa/bunch"
 require "lipa/kind"
-require "lipa/tree"
+require "lipa/root"
+
+def root(name, attrs ={}, &block)
+  Lipa::Root.new(name, attrs, &block)
+end

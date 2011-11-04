@@ -27,7 +27,7 @@ module Lipa
   # Implementaion of root of description
   # @example
   #
-  #   tree = Lipa::Tree.new :tree do 
+  #   tree = Lipa::Root.new :tree do 
   #     node :object do
   #       param_1 "some_param"
   #       param_2 run{param_1 + "!!!!"}
@@ -36,12 +36,12 @@ module Lipa
   #
   #   tree.object.param_1 #=> "some_param"
   #   tree.object.param_2 #=> "some_param!!!!"
-  class Tree < Node
+  class Root < Node
     attr_reader :kinds
     @@trees = {}
     def initialize(name, attrs = {}, &block_given)
       @kinds = {}
-      attrs[:tree] = self
+      attrs[:root] = self
       super
       @@trees.merge! name.to_s => self
       @name = "/"
@@ -58,7 +58,7 @@ module Lipa
     #
     #   some_kind :some_instance 
     def kind(name, attrs = {}, &block)
-      attrs = { :tree => self }
+      attrs = { :root => self }
       @kinds[name.to_sym] = Lipa::Kind.new(name, attrs, &block)
     end
 
@@ -70,7 +70,7 @@ module Lipa
     # @return [Node] node
     #
     # @example
-    #  Lipa::Tree["some_tree://node_1/node_2"] 
+    #  Lipa::Root["some_tree://node_1/node_2"] 
     def self.[](uri)
       tree, path = uri.split("://")
       @@trees[tree][path] if @@trees[tree] 

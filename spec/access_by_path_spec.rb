@@ -2,7 +2,7 @@ require 'lipa'
 
 describe "access to object by path in Unix style" do
   before :all do
-    @tree =  Lipa::Tree.new "lipa" do
+    @tree =  root "lipa" do
       node :obj_1 do 
         node :obj_2 do
           node :obj_3 do 
