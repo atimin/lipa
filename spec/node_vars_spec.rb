@@ -49,7 +49,7 @@ describe Lipa::Node do
   end
 
   it 'should not have attrs indentical withi instance varianles' do
-    [:attrs, :name, :children, :tree, :parent, :full_name, :kind].each do |n|
+    [:attrs, :name, :children, :root, :parent, :full_name, :kind].each do |n|
       @node.attrs.include?(n).should be_false 
     end
   end

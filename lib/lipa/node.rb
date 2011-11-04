@@ -86,6 +86,26 @@ module Lipa
       end
     end
 
+    # Copy attributes with eval
+    #
+    # @retun [Hash] hash
+    #
+    # @example
+    #   node :some_node d:
+    #     param_1 1
+    #     param_2 run{ param_1 + 2}
+    #   end
+    #
+    #   node.attrs #=> {:param_1 => 1, :param_2 => Proc}
+    #   node.eval_attrs #=> {:param_1 => 1, :param_2 => 3}
+    def eval_attrs
+      result = {}
+      @attrs.each_pair do |k,v|
+        result[k.to_sym] = instance_eval(k.to_s)
+      end
+      result
+    end
+
     # Accessor for node by path in Unix style
     # @param [String] path nodes
     # @return [Node] node

@@ -83,4 +83,11 @@ describe Lipa::Node do
     @tree['other_object'].bool_attr.should be_false
   end
 
+  it 'should have eval attrs read only' do
+    @node.eval_attrs[:attr_3].should eql(19)
+    @node.eval_attrs[:attr_1] = 0
+    @node.eval_attrs[:attr_3].should eql(19)
+    
+  end
+
 end

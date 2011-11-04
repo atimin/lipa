@@ -1,5 +1,17 @@
 NEXT Release-1.0.0dev
 ----------------------
+- Added method Node#eval_attrs to access to attrs node with eval
+
+    ```Ruby
+    node :some_node d:
+      param_1 1
+      param_2 run{ param_1 + 2}
+    end
+    
+    node.attrs #=> {:param_1 => 1, :param_2 => Proc}
+    node.eval_attrs #=> {:param_1 => 1, :param_2 => 3}
+    ```
+
 - Renamed Lipa::Tree -> Lipa::Root and added helper method for initialization
 
   ```Ruby
