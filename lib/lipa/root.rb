@@ -44,12 +44,12 @@ module Lipa
       @root = self
       @children = {}
       @attrs = {}
+      @name = "/"
+      @full_name = "/"
 
       instance_eval &block if block_given?
 
       @@trees.merge! name.to_s => self
-      @name = "/"
-      @full_name = "/"
     end
 
     # Initialize of kind

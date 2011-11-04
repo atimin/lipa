@@ -238,7 +238,7 @@ module Lipa
         # Init general attributes
         attrs[:parent] = parent
         attrs[:root] = parent.root
-        fn = parent.full_name || ""
+        fn = parent.full_name == "/" ? "" : parent.full_name
         attrs[:full_name] =  fn  + "/" + args[0].to_s
 
         node_name = args[0].to_sym
