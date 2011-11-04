@@ -1,7 +1,7 @@
 require 'lipa'
 
 describe Lipa::Node do
-  before :all do
+  before :each do
     @tree =  root "lipa" do
       node :group_1 do 
         any_attr "any attr"
@@ -49,7 +49,6 @@ describe Lipa::Node do
   end
 
   it 'should have descripted attr_3 eql sum of attr_1 and attr_2' do
-    @node.attr_3.should eql(8)
     @node.attr_2 = 10
     @node.attr_3.should eql(15)
   end
@@ -60,7 +59,7 @@ describe Lipa::Node do
   end
 
   it 'should have hash access for attrs' do
-    @node.attrs[:attr_1].should eql(8)
+    @node.attrs[:attr_1].should eql(5)
     @node.attrs[:attr_1] = 9
     @node.attrs[:attr_1].should eql(9)
   end
@@ -84,10 +83,7 @@ describe Lipa::Node do
   end
 
   it 'should have eval attrs read only' do
-    @node.eval_attrs[:attr_3].should eql(19)
-    @node.eval_attrs[:attr_1] = 0
-    @node.eval_attrs[:attr_3].should eql(19)
-    
+    @node.eval_attrs.should eql({:attr_1 => 5, :attr_2 => 3, :attr_3 => 8, :attr_4 => @node["/other_object"]})
   end
 
 end

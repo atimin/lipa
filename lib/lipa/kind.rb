@@ -42,8 +42,8 @@ module Lipa
     def initialize(name, attrs = {}, &block)
       # OPTIMIZE: Make it shorter
       if attrs[:for]
-        @for = attr[:for]
-        attrs[:for] = nil
+        @for = attrs[:for]
+        attrs.delete(:for)
       else
         @for = :node
       end

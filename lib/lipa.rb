@@ -29,6 +29,6 @@ require "lipa/bunch"
 require "lipa/kind"
 require "lipa/root"
 
-def root(name, attrs ={}, &block)
-  Lipa::Root.new(name, attrs, &block)
+def root(name, &block)
+  Lipa::Root.new(name, &block)
 end

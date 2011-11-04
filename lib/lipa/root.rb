@@ -39,10 +39,14 @@ module Lipa
   class Root < Node
     attr_reader :kinds
     @@trees = {}
-    def initialize(name, attrs = {}, &block_given)
+    def initialize(name, &block)
       @kinds = {}
-      attrs[:root] = self
-      super
+      @root = self
+      @children = {}
+      @attrs = {}
+
+      instance_eval &block if block_given?
+
       @@trees.merge! name.to_s => self
       @name = "/"
       @full_name = "/"
@@ -58,7 +62,6 @@ module Lipa
     #
     #   some_kind :some_instance 
     def kind(name, attrs = {}, &block)
-      attrs = { :root => self }
       @kinds[name.to_sym] = Lipa::Kind.new(name, attrs, &block)
     end
 

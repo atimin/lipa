@@ -46,7 +46,7 @@ module Lipa
     def initialize(name, attrs = {}, &block)
       @attrs = attrs
       @name = name.to_s
-      @children ||= {}
+      @children = {}
       @parent = attrs[:parent] 
       @root = attrs[:root]
       @full_name = attrs[:full_name] 
@@ -223,43 +223,39 @@ module Lipa
     def self.add_node(name, parent, *args, &block)
       # OPTIMIZE: This code looks bad
       # Init from kind
-      attrs = {}
       args[1] ||= {}
-      attrs.merge!(args[1])
+      attrs = {}
 
       k = parent.root.kinds[name]
       if k and k.for
         init_class = @@init_methods[k.for]
-        attrs[:kind] = k.name
-        attrs.merge!(k.attrs) do |key,v1,v2|
-          v1
-        end
       else
         #from init methods
         init_class = @@init_methods[name]
       end
 
       if init_class
+        # Init general attributes
         attrs[:parent] = parent
         attrs[:root] = parent.root
         fn = parent.full_name || ""
         attrs[:full_name] =  fn  + "/" + args[0].to_s
 
-
-        child_name = args[0].to_sym
-        existen_child = parent.children[child_name]
-        attrs = existen_child.attrs.merge(args[1]) if existen_child
-
-        args[1].merge!(attrs) do |key,v1,v2| 
-          v1
-        end
-
+        node_name = args[0].to_sym
+        children = parent.children
         if k
-          parent.children[child_name] = init_class.send(:new, *args.clone, &k.block)
-          parent.children[child_name].attrs.merge!(attrs)
-          parent.children[child_name].instance_exec(&block) if block_given?
+          attrs.merge! k.attrs
+          attrs[:kind] = k.name
+          #Node is descripted in kind
+          existen_child = parent.children[node_name]
+          attrs = existen_child.attrs.merge(attrs) if existen_child
+          #Init from kind
+          children[node_name] = init_class.send(:new, node_name, attrs, &k.block)
+          #Local modification
+          children[node_name].attrs.merge!(args[1])
+          children[node_name].instance_exec(&block) if block_given?
         else
-          parent.children[child_name] = init_class.send(:new, *args, &block )
+          children[node_name] = init_class.send(:new, node_name, attrs.merge(args[1]), &block )
         end
         true
       else  
