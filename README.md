@@ -18,7 +18,7 @@ Example
 ------------------------------------------------------
 
     require 'lipa'
-    un = Lipa::Tree.new :universe do 
+    un = root :universe do 
       kind :planet_system do
         num_planet run{
           count = 0
@@ -63,3 +63,4 @@ Example
 Reference
 ----------------------------------
 Home page: http://lipa.flipback.net
+Web access to Lipa https://github.com/flipback/lipa-web

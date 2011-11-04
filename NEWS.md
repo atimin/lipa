@@ -1,8 +1,16 @@
 NEXT Release-1.0.0dev
 ----------------------
+- Renamed Lipa::Tree -> Lipa::Root and added helper method for initialization
+
+  ```Ruby
+    tree = root :tree do
+      node :node_1
+    end
+  ```
+
 - Fixed bug in Lipa::Node. Attributes is working with false values.
 - Added :full_name attribute to Lipa::Node
-- Attributes :name, :parent, :children, :tree, :full_name, :kind are instance variables
+- Attributes :name, :parent, :children, :root, :full_name, :kind are instance variables
 - Fixed bug for calls: `node[""] #=> self` and `node["/"] #=> tree`
 - All instances of Lipa::Tree have name an full name equal "/"
 

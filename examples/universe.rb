@@ -1,7 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__),'../lib')
 require 'lipa'
 
-un = Lipa::Tree.new :universe do 
+un = root :universe do 
   kind :planet_system do
     num_planet run{
       count = 0

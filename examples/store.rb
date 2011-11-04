@@ -1,7 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__),'../lib')
 require "lipa"
 
-store = Lipa::Tree.new :store do 
+store = root :store do 
   kind :category do
     unit_count run{
       count = 0
