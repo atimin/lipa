@@ -84,7 +84,7 @@ module Lipa
     # @param path to file
     #
     # @example 
-    #   Lipa::Tree.new "lipa" do
+    #   root "lipa" do
     #     load_from File.dirname(__FILE__) + "/data/part_of_tree.rb"
     #   end
     def load_from(path)

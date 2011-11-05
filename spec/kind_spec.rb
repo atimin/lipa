@@ -54,7 +54,7 @@ describe Lipa::Kind do
     @tree.folder_1.name.should eql("folder_1")
   end
 
-  it 'should do_somethign' do
+  it 'should have attrs' do
    @tree.folder_1.some_file.attrs.should eql({:ext => "txt", :size => 1024})
   end
 

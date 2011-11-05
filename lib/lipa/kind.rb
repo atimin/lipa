@@ -27,7 +27,7 @@ module Lipa
   # Implemenation of kind(template) for description
   #
   # @example
-  #   tree = Lipa::Tree.new :tree do 
+  #   tree = root :tree do 
   #     kind :some_kind do
   #       param1 "some_param"
   #     end
@@ -40,13 +40,8 @@ module Lipa
   class Kind
     attr_reader :attrs, :name, :for, :block
     def initialize(name, attrs = {}, &block)
-      # OPTIMIZE: Make it shorter
-      if attrs[:for]
-        @for = attrs[:for]
-        attrs.delete(:for)
-      else
-        @for = :node
-      end
+      @for =  attrs.delete(:for)
+      @for ||= :node
 
       @attrs = attrs
       @name = name.to_sym

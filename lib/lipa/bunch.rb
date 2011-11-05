@@ -27,7 +27,7 @@ module Lipa
   # Implementation of group description
   # 
   # @example
-  #   tree = Lipa::Tree.new :tree do 
+  #   tree = root :tree do 
   #     bunch :param_1 => "some_param" do
   #       leaf :obj_1
   #       leaf :obj_2
@@ -45,8 +45,7 @@ module Lipa
     end
 
     def method_missing(name, *args, &block)
-      args[1] ||= {}
-      args[1] = @attrs.merge(args[1])
+      args[1] = @attrs.merge(args[1] || {})
       unless Node.add_node(name, @parent, *args, &block)
         super
       end

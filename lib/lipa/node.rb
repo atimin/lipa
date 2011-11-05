@@ -44,18 +44,13 @@ module Lipa
     @@init_methods = {:node => self}
 
     def initialize(name, attrs = {}, &block)
-      @attrs = attrs
       @name = name.to_s
       @children = {}
-      @parent = attrs[:parent] 
-      @root = attrs[:root]
-      @full_name = attrs[:full_name] 
-      @kind = attrs[:kind]
-
-      #clear attrs 
-      instance_variables.each do |var|  
-        attrs.delete(var[1..-1].to_sym)
-      end
+      @parent = attrs.delete(:parent)
+      @root = attrs.delete(:root)
+      @full_name = attrs.delete(:full_name)
+      @kind = attrs.delete(:kind)
+      @attrs = attrs
 
       instance_eval &block if block_given?
     end
@@ -116,8 +111,8 @@ module Lipa
     #   dir_2["./searched_obj"] 
     #   dir_2["../dir_2/searched_obj"] 
     def [](path)
-      split_path = path.split("/")  
-      obj = case split_path[0]
+      first, *rest_path = path.split("/")  
+      obj = case first
       when nil
         if path == "/"
           root
@@ -131,15 +126,14 @@ module Lipa
       when "."
         self
       else
-        children[split_path[0].to_sym]
+        children[first.to_sym]
       end
 
-      if obj
-        if split_path.size > 1
-          obj[split_path[1..-1].join("/")]
-        else
-          obj
-        end
+      return nil if obj.nil?
+      if rest_path.size > 0
+        obj[rest_path.join("/")]
+      else
+        obj
       end
     end
 
