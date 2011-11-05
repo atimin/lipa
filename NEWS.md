@@ -1,4 +1,4 @@
-NEXT Release-1.0.0dev
+2011-11-05 Release-1.0.0
 ----------------------
 - Added method Node#eval_attrs to access to attrs node with eval
 
