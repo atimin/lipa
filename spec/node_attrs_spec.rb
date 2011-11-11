@@ -11,6 +11,7 @@ describe Lipa::Node do
           attr_3 run{attr_1 + attr_2}
           attr_4 ref("/other_object")
 
+
           node :obj_2 
           node :obj_3 
         end
@@ -76,6 +77,10 @@ describe Lipa::Node do
 
   it 'should have access other object by reference' do
     @node.attr_4.should eql(@tree.other_object)
+  end
+
+  it 'should have hash of objects which are referencing on it' do
+    @tree.other_object.refs.should == { :obj_1 => @node } 
   end
 
   it 'should have attrs with false ' do

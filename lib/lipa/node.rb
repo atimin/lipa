@@ -42,10 +42,12 @@ module Lipa
   class Node 
     attr_accessor :attrs, :name, :children, :root, :parent, :full_name, :kind
     @@init_methods = {:node => self}
+    @@refs = {}
 
     def initialize(name, attrs = {}, &block)
       @name = name.to_s
       @children = {}
+      @refs = {}
       @parent = attrs.delete(:parent)
       @root = attrs.delete(:root)
       @full_name = attrs.delete(:full_name)
@@ -168,7 +170,7 @@ module Lipa
       block
     end
 
-    # Reference to othe object
+    # Reference to other object
     # @param path in Unix style
     #
     # @example
@@ -178,7 +180,29 @@ module Lipa
     #     param_1 ref("../node_1")
     #   end
     def ref(path) 
-     Proc.new { self[path] }
+      @@refs.merge!( self.full_name => path )
+      Proc.new { self[path] }
+    end
+
+    # References on node
+    # 
+    # @return [Hash] hash of nodes
+    #
+    # @example
+    #
+    #   node :node_1 
+    #   node :node_2 do
+    #     param_1 ref("../node_1")
+    #   end
+    #
+    #   root.node_1.refs #=> { :node_2 => <Lipa::Node:xxxxx @name = "node_2"> }
+    def refs
+      refs = {}
+      (@@refs.select { |k,v| v == self.full_name }).each_key do |path|
+        node = self.root[path]
+        refs[node.name.to_sym] = node
+      end
+      refs
     end
 
     # Accesor for methods for initialization

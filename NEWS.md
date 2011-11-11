@@ -1,3 +1,18 @@
+NEXT  Release-1.1.0
+----------------------
+- Added method Node#refs for access to nodes which are referensing on it
+
+  ```Ruby
+    tree = root :tree do
+      node :node_1 
+      node :node_2 do
+        param_1 ref("../node_1")
+      end
+    end
+   
+    root.node_1.refs #=> { :node_2 => <Lipa::Node:xxxxx @name = "node_2"> }
+  ```
+
 2011-11-05 Release-1.0.0
 ----------------------
 - Added method Node#eval_attrs to access to attrs node with eval
