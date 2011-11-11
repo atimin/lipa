@@ -14,6 +14,8 @@ Gem::Specification.new do |gem|
   gem.rdoc_options = ["--title", "Lipa", "--inline-source", "--main", "README.md"]
   gem.extra_rdoc_files = ["README.md", "NEWS.md"]
 
+  gem.required_ruby_version = '>= 1.9.2'
+
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'rspec'

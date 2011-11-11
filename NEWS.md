@@ -1,5 +1,6 @@
 NEXT  Release-1.1.0
 ----------------------
+- Required Ruby 1.9.2 and higher
 - Added method Node#refs for access to nodes which are referensing on it
 
   ```Ruby
